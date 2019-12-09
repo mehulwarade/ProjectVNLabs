@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = 'Members';
       <div class="row">
          <div class="col-lg-12">
             <h1 class="page-header">Welcome <?php echo $session['decryplogusr']; ?>!</h1>
+
          </div>
       </div>
       <div class="member-index" style="margin-right:250px;">
@@ -33,6 +34,7 @@ $this->params['breadcrumbs'][] = 'Members';
          </p>
 
          <?php //echo $this->render('_search', ['model' => $searchModel]); 
+
          ?>
 
          <?= GridView::widget([
@@ -42,7 +44,7 @@ $this->params['breadcrumbs'][] = 'Members';
                ['class' => 'yii\grid\SerialColumn'],
 
                'account',
-               'password',
+               //'password',
                'name',
                'email:email',
                'role',
@@ -54,6 +56,14 @@ $this->params['breadcrumbs'][] = 'Members';
             ],
          ]); ?>
       </div>
+
+      <!-- Shows the flash messege  -->
+      <?php if (Yii::$app->session->getFlash('msg') !== NULL) { ?>
+         <div class="alert alert-success"><?= Yii::$app->session->getFlash('msg'); ?></div>
+      <?php } ?>
+      <!-- end flash messege -->
+
+   </div>
    </div>
 
    <!-- Manage Day Leave block -->
@@ -65,22 +75,21 @@ $this->params['breadcrumbs'][] = 'Members';
          </div>
       </div>
 
-      
+      <form action="dashboard/managedayleave" class="dropdown" method="get">
+         Member: <?= Html::activeDropDownList($model, 'account', $items) ?><br><br>
 
-      <form action="/action_page.php" class="dropdown">
-         Member: <?= Html::activeDropDownList($model, 'account',$items) ?><br><br>
          Type:
-            <!-- class dropdown is the css for dropdown -->
-            <z class="dropdown" >
-               <select name="type">
-                  <option value="add">Add</option>
-                  <option value="sub">Substract</option>
-               </select>
-            </z><br><br>
+         <!-- class dropdown is the css for dropdown -->
+         <z class="dropdown">
+            <select name="type">
+               <option value="add">Add</option>
+               <option value="sub">Substract</option>
+            </select>
+         </z><br><br>
 
-         Number of Days: <input type="text" placeholder="Day" name="day" style="width: 2cm"> days &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" style="width: 2cm" placeholder="Hour" name="hour"> hours<br><br>
-         
+         Number of Days: <input type="text" placeholder="Day" name="day" style="width: 2cm" required> days &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="text" style="width: 2cm" placeholder="Hour" name="hour" required> hours<br><br>
+
          Reason: <input type="text" placeholder="Input reason here" name="reason">
 
          <br><br>

@@ -133,4 +133,44 @@ class MemberMethods{
         }
     }
 
+    public function ManageDayLeave($account, $type, $day, $hour, $reason){
+        
+        //Declaring the sql query and executing the query
+        $exists = Member::find()->where(['account' => $account])->one();
+        
+        $kbn = 0;
+        $timecount = $hour + ($day * 8);
+        
+        if($exists){
+            if($type=='add'){
+                $kbn = 8;
+            }
+            else{
+                $kbn = 9;
+            }
+
+            Yii::$app->db->createCommand()
+            ->insert('member_day_leave_history', 
+                [
+                    'account' => $account,
+                    'history_kbn'=>$kbn,
+                    'date_from'=>'',
+                    'date_to'=>'',
+                    'time_point'=>'',
+                    'time_count' => $timecount,
+                    'reason'=>$reason,
+                    'status'=>$exists['status'],
+                    'insert_date'=>date('Y-m-d', time()),
+                    'update_date'=>date('Y-m-d', time())
+                ]
+            )->execute();
+
+            return 'Successful.';
+        }
+        else{
+            return 'Something went wrong with the request. Please try again.';
+        }
+
+    }
+
 }

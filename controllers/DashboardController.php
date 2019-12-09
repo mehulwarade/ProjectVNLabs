@@ -7,22 +7,12 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\MemberSearch;
+use app\widgets\Alert;
 use yii\helpers\ArrayHelper;
 
 class DashboardController extends Controller
 {
     public $enableCsrfValidation = false;
-    // public function behaviors()
-    // {
-    //     return [
-    //         'verbs' => [
-    //             'class' => VerbFilter::className(),
-    //             'actions' => [
-    //                 'delete' => ['POST'],
-    //             ],
-    //         ],
-    //     ];
-    // }
 
     public function actionIndex()
     {
@@ -71,6 +61,27 @@ class DashboardController extends Controller
         }
     }
 
+    public function actionManagedayleave(){
+        $request = Yii::$app->request->get();
+
+        // echo "<pre>";
+        // var_dump($request);exit();
+
+        $member = $request['Member'];
+        $type = $request['type'];
+        $day = $request['day'];
+        $hour = $request['hour'];
+        $reason = $request['reason'];
+
+        Yii::$app->session->setFlash('msg',Yii::$app->Member->ManageDayLeave($member['account'], $type, $day, $hour, $reason));
+        // var_dump(Yii::$app->session->getFlash('msg'));exit();
+
+        return $this->redirect(['/dashboard']);
+        
+        
+    }
+
+    #region Original Member Class functions: View, Update, Create, Delete, Find 
     public function actionView($id)
     {
         $this->layout = 'dashboard';
@@ -146,4 +157,5 @@ class DashboardController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    #endregion
 }
