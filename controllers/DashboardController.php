@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\MemberSearch;
+use yii\helpers\ArrayHelper;
 
 class DashboardController extends Controller
 {
@@ -29,8 +30,13 @@ class DashboardController extends Controller
 
         $searchModel = new MemberSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         $decrypusr = Yii::$app->Encryption->Decypt($session['logusr']);
+
+        //start: Following used for the drop down menu in manage day leave block
+        $model = new Member();
+        $items = ArrayHelper::map(Member::find()->all(), 'account', 'name');
+        //end
+
         //print($decrypusr);exit();
  
         $session['decryplogusr'] = $decrypusr . " ";
@@ -42,6 +48,9 @@ class DashboardController extends Controller
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                //following is for the day leave manage block
+                'model'=>$model,
+                'items'=>$items,
         ]);
         }
         

@@ -70,19 +70,19 @@ AppAsset::register($this);
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a onclick=managemember() class="active">Manage Members</a>
+                            <a onclick=managemember() id="member"class="active">Manage Members</a>
                         </li>
                         <li>
-                            <a onclick=dayleavemanage()>Day Leave management</a>
+                            <a onclick=dayleavemanage() id="leavemanage">Day Leave management</a>
                         </li>
                         <li>
-                            <a onclick=dayleavestat()>Day Leave statistics</a>
+                            <a onclick=dayleavestat() id="stat">Day Leave statistics</a>
                         </li>
                         <li>
-                            <a onclick=dayleavehis()>Day Leave History</a>
+                            <a onclick=dayleavehis() id="history">Day Leave History</a>
                         </li>
                         <li>
-                            <a onclick=statoutexcel()>Statistics and Output Excel Monthly</a>
+                            <a onclick=statoutexcel() id="excel">Statistics and Output Excel Monthly</a>
                         </li>
                     </ul>
                 </div>
@@ -134,41 +134,66 @@ AppAsset::register($this);
 <script>
     function managemember() {
         document.getElementById('managemember').style.display = 'block';
+        document.getElementById('member').className = "active";
         document.getElementById('dayleavemanage').style.display = 'none';
+        document.getElementById('leavemanage').className = "";
         document.getElementById('dayleavestat').style.display = 'none';
+        document.getElementById('stat').className = "";
         document.getElementById('dayleavehis').style.display = 'none';
+        document.getElementById('history').className = "";
         document.getElementById('statoutexcel').style.display = 'none';
+        document.getElementById('excel').className = "";
     }
 
     function dayleavemanage() {
         document.getElementById('managemember').style.display = 'none';
+        document.getElementById('member').className = "";
         document.getElementById('dayleavemanage').style.display = 'block';
+        document.getElementById('leavemanage').className = "active";
         document.getElementById('dayleavestat').style.display = 'none';
+        document.getElementById('stat').className = "";
         document.getElementById('dayleavehis').style.display = 'none';
+        document.getElementById('history').className = "";
         document.getElementById('statoutexcel').style.display = 'none';
+        document.getElementById('excel').className = "";
     }
 
     function dayleavestat() {
         document.getElementById('managemember').style.display = 'none';
+        document.getElementById('member').className = "";
         document.getElementById('dayleavemanage').style.display = 'none';
+        document.getElementById('leavemanage').className = "";
         document.getElementById('dayleavestat').style.display = 'block';
+        document.getElementById('stat').className = "active";
         document.getElementById('dayleavehis').style.display = 'none';
+        document.getElementById('history').className = "";
         document.getElementById('statoutexcel').style.display = 'none';
+        document.getElementById('excel').className = "";
     }
 
     function dayleavehis() {
         document.getElementById('managemember').style.display = 'none';
+        document.getElementById('member').className = "";
         document.getElementById('dayleavemanage').style.display = 'none';
+        document.getElementById('leavemanage').className = "";
         document.getElementById('dayleavestat').style.display = 'none';
+        document.getElementById('stat').className = "";
         document.getElementById('dayleavehis').style.display = 'block';
+        document.getElementById('history').className = "active";
         document.getElementById('statoutexcel').style.display = 'none';
+        document.getElementById('excel').className = "";
     }
 
     function statoutexcel() {
         document.getElementById('managemember').style.display = 'none';
+        document.getElementById('member').className = "";
         document.getElementById('dayleavemanage').style.display = 'none';
+        document.getElementById('leavemanage').className = "";
         document.getElementById('dayleavestat').style.display = 'none';
+        document.getElementById('stat').className = "";
         document.getElementById('dayleavehis').style.display = 'none';
+        document.getElementById('history').className = "";
         document.getElementById('statoutexcel').style.display = 'block';
+        document.getElementById('excel').className = "active";
     }
 </script>

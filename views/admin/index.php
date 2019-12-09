@@ -20,8 +20,11 @@ use yii\widgets\Breadcrumbs;
       <button type="submit">Login</button>
       <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
     </form>
+
+    <!-- Original button style which was change to plain text and link -->
+    <!-- <button onclick="document.getElementById('id01').style.display='block'" class="cancelbtn">Forget Password</button> -->
     
-    <button onclick="document.getElementById('id01').style.display='block'" class="cancelbtn">Forget Password</button>
+    <u><a onclick="document.getElementById('id01').style.display='block'" style="color: red; cursor: pointer">Forget Password</a></u>
 
     </form>
 
