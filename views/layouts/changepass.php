@@ -12,7 +12,6 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-
 <head>
     <title>Reset Password</title>
     <?= Html :: csrfMetaTags() ?>
