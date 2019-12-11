@@ -64,7 +64,6 @@ $this->params['breadcrumbs'][] = 'Members';
       <!-- end flash messege -->
 
    </div>
-   </div>
 
    <!-- Manage Day Leave block -->
    <div id="dayleavemanage" class="w3-modal w3-modal w3-animate-zoom container-fluid" style="display:none;margin-left:250px;padding: 30px 15px 0 15px;background-color: #fff">
@@ -75,26 +74,15 @@ $this->params['breadcrumbs'][] = 'Members';
          </div>
       </div>
 
-      <form action="dashboard/managedayleave" class="dropdown" method="get">
-         Member: <?= Html::activeDropDownList($model, 'account', $items) ?><br><br>
+      <div style="width: 80%">
+         <?=
+            $this->render('indexmanageday', [
+               // 'searchModelday' => $searchModelday,
+               'dataProvider' => $dataProviderday,
+            ]);
+         ?>
+      </div>
 
-         Type:
-         <!-- class dropdown is the css for dropdown -->
-         <z class="dropdown">
-            <select name="type">
-               <option value="add">Add</option>
-               <option value="sub">Substract</option>
-            </select>
-         </z><br><br>
-
-         Number of Days: <input type="text" placeholder="Day" name="day" style="width: 2cm" required> days &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <input type="text" style="width: 2cm" placeholder="Hour" name="hour" required> hours<br><br>
-
-         Reason: <input type="text" placeholder="Input reason here" name="reason">
-
-         <br><br>
-         <input class="btn btn-success" type="submit">
-      </form>
    </div>
 
    <!-- Day Leave Stat block -->

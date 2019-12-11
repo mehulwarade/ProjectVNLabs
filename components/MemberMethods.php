@@ -4,6 +4,7 @@ namespace app\components;
 
 use Yii;
 use app\models\Member;
+use app\models\Memberdayleavehistory;
 
 class MemberMethods{
 
@@ -171,6 +172,33 @@ class MemberMethods{
             return 'Something went wrong with the request. Please try again.';
         }
 
+    }
+
+    public function DeleteEntryDayLeave($id){
+        
+        //Declaring the sql query and executing the query
+        $exists = Memberdayleavehistory::find()->where(['member_day_leave_history_id' => $id])->one();
+        
+        //print($exists);exit();
+        
+        //Checking if the username and password are same as that of the database
+        if($exists){
+
+            //Setting the status in the databse
+            Yii::$app->db->createCommand()
+            ->update('member_day_leave_history', ['status' => 1], ['member_day_leave_history_id' => $id])
+            ->execute();
+
+            //Setting the update date in the databse
+            Yii::$app->db->createCommand()
+            ->update('member_day_leave_history', ['update_date' => date('Y-m-d', time())], ['member_day_leave_history_id' => $id])
+            ->execute();
+
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

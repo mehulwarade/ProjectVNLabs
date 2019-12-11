@@ -19,7 +19,7 @@ use Yii;
  * @property string|null $insert_date
  * @property string|null $update_date
  */
-class MemberDayLeaveHistory extends \yii\db\ActiveRecord
+class Memberdayleavehistory extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,8 +36,8 @@ class MemberDayLeaveHistory extends \yii\db\ActiveRecord
     {
         return [
             [['account', 'history_kbn'], 'required'],
-            [['date_from', 'date_to', 'time_point', 'insert_date', 'update_date'], 'safe'],
             [['history_kbn', 'time_count', 'status'], 'integer'],
+            [['date_from', 'date_to', 'time_point', 'insert_date', 'update_date'], 'safe'],
             [['account'], 'string', 'max' => 10],
             [['reason'], 'string', 'max' => 200],
         ];

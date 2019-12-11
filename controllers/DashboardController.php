@@ -9,6 +9,8 @@ use yii\web\NotFoundHttpException;
 use app\models\MemberSearch;
 use app\widgets\Alert;
 use yii\helpers\ArrayHelper;
+use app\models\MemberdayleavehistorySearch;
+use app\models\Memberdayleavehistory;
 
 class DashboardController extends Controller
 {
@@ -22,10 +24,8 @@ class DashboardController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $decrypusr = Yii::$app->Encryption->Decypt($session['logusr']);
 
-        //start: Following used for the drop down menu in manage day leave block
-        $model = new Member();
-        $items = ArrayHelper::map(Member::find()->all(), 'account', 'name');
-        //end
+        $searchModelday = new MemberdayleavehistorySearch();
+        $dataProviderday = $searchModelday->search(Yii::$app->request->queryParams);
 
         //print($decrypusr);exit();
  
@@ -36,11 +36,11 @@ class DashboardController extends Controller
         else{
             $this->layout = 'dashboard';
             return $this->render('index', [
-                'searchModel' => $searchModel,
+                // 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 //following is for the day leave manage block
-                'model'=>$model,
-                'items'=>$items,
+                // 'searchModelday' => $searchModelday,
+                'dataProviderday' => $dataProviderday,
         ]);
         }
         
@@ -76,9 +76,7 @@ class DashboardController extends Controller
         Yii::$app->session->setFlash('msg',Yii::$app->Member->ManageDayLeave($member['account'], $type, $day, $hour, $reason));
         // var_dump(Yii::$app->session->getFlash('msg'));exit();
 
-        return $this->redirect(['/dashboard']);
-        
-        
+        return $this->redirect(['/dashboard']);  
     }
 
     #region Original Member Class functions: View, Update, Create, Delete, Find 
@@ -89,7 +87,6 @@ class DashboardController extends Controller
         $account = $model->account;
 
         return $this->render('view', [
-            
             'model' => $model
         ]);
     }
@@ -157,5 +154,57 @@ class DashboardController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    #endregion
+
+    #region Manage Day Leave bloack: View, Update, Create, Delete, Find
+
+    public function actionCreatemanageday()
+    {
+        $this->layout = 'dashboard';
+
+        //start: Following used for the drop down menu in manage day leave block
+        $model = new Member();
+        $items = ArrayHelper::map(Member::find()->all(), 'account', 'name');
+        //end
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->member_day_leave_history_id]);
+        }
+
+        return $this->render('createmanageday', [
+            'model' => $model,
+            'items' => $items,
+        ]);
+    }
+
+    public function actionViewday($id)
+    {
+        $this->layout = 'dashboard';
+        //print_r($this->findModel('22'));exit();
+        return $this->render('viewmanageday', [
+            'modelday' => $this->findModelmanage($id),
+        ]);
+    }
+
+    protected function findModelmanage($id)
+    {
+        $this->layout = 'dashboard';
+        if (($model = Memberdayleavehistory::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDeleteday($id)
+    {
+        $this->layout = 'dashboard';
+
+        //Delete the entry out of the database. check the membermethods for the method.
+        if(Yii::$app->Member->DeleteEntryDayLeave(htmlspecialchars($_GET["id"]))){
+            return $this->redirect(['/dashboard']);
+        }
+    }
+
     #endregion
 }
